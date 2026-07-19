@@ -1,15 +1,33 @@
-from models.task import Task
-
-
 class Project:
-    def __init__(self, title):
+    """Represents a project."""
+
+    next_id = 1
+
+    def __init__(self, title: str, description: str, due_date: str):
+        self.project_id = Project.next_id
+        Project.next_id += 1
+
         self.title = title
+        self.description = description
+        self.due_date = due_date
+
         self.tasks = []
 
-    def add_task(self, title):
-        task = Task(title)
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        value = value.strip()
+
+        if not value:
+            raise ValueError("Project title cannot be empty.")
+
+        self._title = value
+
+    def add_task(self, task):
         self.tasks.append(task)
-        return task
 
     def get_task(self, title):
         for task in self.tasks:
@@ -18,4 +36,8 @@ class Project:
         return None
 
     def __str__(self):
-        return self.title
+        return (
+            f"Project #{self.project_id}: "
+            f"{self.title} "
+            f"({len(self.tasks)} task(s))"
+        )
