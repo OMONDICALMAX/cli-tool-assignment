@@ -13,7 +13,6 @@ def save_data(users):
         "users": [user.to_dict() for user in users]
     }
 
-    # Ensure the data directory exists
     DATABASE.parent.mkdir(parents=True, exist_ok=True)
 
     with DATABASE.open("w", encoding="utf-8") as file:
@@ -50,5 +49,16 @@ def find_user(users, name):
     for user in users:
         if user.name.lower() == name.lower():
             return user
+
+    return None
+
+
+def find_project(users, title):
+    """Find a project by title across all users."""
+
+    for user in users:
+        project = user.get_project(title)
+        if project:
+            return project
 
     return None

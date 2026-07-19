@@ -1,3 +1,25 @@
 {
-    "users": []
+    "users": [
+        {
+            "user_id": 1,
+            "name": "Alex",
+            "email": "alex@gmail.com",
+            "projects": [
+                {
+                    "project_id": 1,
+                    "title": "CLI Tool",
+                    "description": "Python Project Management CLI",
+                    "due_date": "2026-08-31",
+                    "tasks": [
+                        {
+                            "task_id": 1,
+                            "title": "Implement add-task",
+                            "assigned_to": "Alex",
+                            "status": "Completed"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

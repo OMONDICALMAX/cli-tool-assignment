@@ -26,7 +26,7 @@ class User(Person):
 
     def get_project(self, title):
         for project in self.projects:
-            if project.title == title:
+            if project.title.lower() == title.lower():
                 return project
         return None
 
