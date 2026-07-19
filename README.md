@@ -154,7 +154,7 @@ User
 ### Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/OMONDICALMAX/cli-tool-assignment.git
 cd cli-tool-assignement
 ```
 
@@ -358,6 +358,3 @@ This project demonstrates:
 
 **Calmax Omondi**
 
-Software Engineering Student
-
-Python Project Management CLI Tool — Summative Lab

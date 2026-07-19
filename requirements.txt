@@ -1,0 +1,5 @@
+-i https://pypi.org/simple
+markdown-it-py==4.2.0; python_version >= '3.10'
+mdurl==0.1.2; python_version >= '3.7'
+pygments==2.20.0; python_version >= '3.9'
+rich==15.0.0; python_full_version >= '3.9.0'
