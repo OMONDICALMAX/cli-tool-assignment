@@ -1,4 +1,5 @@
 from models.person import Person
+from models.project import Project
 
 
 class User(Person):
@@ -28,6 +29,36 @@ class User(Person):
             if project.title == title:
                 return project
         return None
+
+    def to_dict(self):
+        return {
+            "user_id": self.user_id,
+            "name": self.name,
+            "email": self.email,
+            "projects": [
+                project.to_dict()
+                for project in self.projects
+            ]
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        user = cls(
+            data["name"],
+            data["email"]
+        )
+
+        user.user_id = data["user_id"]
+
+        if user.user_id >= cls.next_id:
+            cls.next_id = user.user_id + 1
+
+        user.projects = [
+            Project.from_dict(project_data)
+            for project_data in data["projects"]
+        ]
+
+        return user
 
     def __str__(self):
         return (

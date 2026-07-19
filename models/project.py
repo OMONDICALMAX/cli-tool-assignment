@@ -1,3 +1,6 @@
+from models.task import Task
+
+
 class Project:
     """Represents a project."""
 
@@ -10,7 +13,6 @@ class Project:
         self.title = title
         self.description = description
         self.due_date = due_date
-
         self.tasks = []
 
     @property
@@ -34,6 +36,35 @@ class Project:
             if task.title == title:
                 return task
         return None
+
+    def to_dict(self):
+        return {
+            "project_id": self.project_id,
+            "title": self.title,
+            "description": self.description,
+            "due_date": self.due_date,
+            "tasks": [task.to_dict() for task in self.tasks]
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        project = cls(
+            data["title"],
+            data["description"],
+            data["due_date"]
+        )
+
+        project.project_id = data["project_id"]
+
+        if project.project_id >= cls.next_id:
+            cls.next_id = project.project_id + 1
+
+        project.tasks = [
+            Task.from_dict(task_data)
+            for task_data in data["tasks"]
+        ]
+
+        return project
 
     def __str__(self):
         return (
