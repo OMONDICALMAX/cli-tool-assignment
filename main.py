@@ -3,6 +3,10 @@ import argparse
 from models.user import User
 from models.project import Project
 from models.task import Task
+from rich.console import Console
+from rich.table import Table
+
+console = Console()
 
 from utils.storage import (
     load_data,
@@ -43,14 +47,25 @@ def list_users(args):
     users = load_data()
 
     if not users:
-        print("No users found.")
+        console.print("[bold yellow]No users found.[/bold yellow]")
         return
 
-    print("\nUsers")
-    print("-" * 40)
+    table = Table(title="Users")
+
+    table.add_column("ID", style="cyan", justify="center")
+    table.add_column("Name", style="green")
+    table.add_column("Email", style="magenta")
+    table.add_column("Projects", justify="center")
 
     for user in users:
-        print(user)
+        table.add_row(
+            str(user.user_id),
+            user.name,
+            user.email,
+            str(len(user.projects))
+        )
+
+    console.print(table)
 
 
 # ======================================================
@@ -100,18 +115,29 @@ def list_projects(args):
     user = find_user(users, args.user)
 
     if user is None:
-        print(f"User '{args.user}' not found.")
+        console.print(f"[bold red]User '{args.user}' not found.[/bold red]")
         return
 
     if not user.projects:
-        print(f"{user.name} has no projects.")
+        console.print(f"[bold yellow]{user.name} has no projects.[/bold yellow]")
         return
 
-    print(f"\nProjects for {user.name}")
-    print("-" * 40)
+    table = Table(title=f"Projects for {user.name}")
+
+    table.add_column("ID", style="cyan", justify="center")
+    table.add_column("Title", style="green")
+    table.add_column("Due Date", style="yellow")
+    table.add_column("Tasks", justify="center")
 
     for project in user.projects:
-        print(project)
+        table.add_row(
+            str(project.project_id),
+            project.title,
+            project.due_date,
+            str(len(project.tasks))
+        )
+
+    console.print(table)
 
 
 # ======================================================
@@ -267,18 +293,31 @@ def list_tasks(args):
     project = find_project(users, args.project)
 
     if project is None:
-        print(f"Project '{args.project}' not found.")
+        console.print(f"[bold red]Project '{args.project}' not found.[/bold red]")
         return
 
     if not project.tasks:
-        print(f"Project '{project.title}' has no tasks.")
+        console.print(
+            f"[bold yellow]Project '{project.title}' has no tasks.[/bold yellow]"
+        )
         return
 
-    print(f"\nTasks for {project.title}")
-    print("-" * 50)
+    table = Table(title=f"Tasks for {project.title}")
+
+    table.add_column("ID", style="cyan", justify="center")
+    table.add_column("Title", style="green")
+    table.add_column("Status", style="yellow")
+    table.add_column("Assigned To", style="magenta")
 
     for task in project.tasks:
-        print(task)
+        table.add_row(
+            str(task.task_id),
+            task.title,
+            task.status,
+            task.assigned_to
+        )
+
+    console.print(table)
 
 
 def complete_task(args):

@@ -16,8 +16,21 @@
                             "title": "Implement add-task",
                             "assigned_to": "Alex",
                             "status": "Completed"
+                        },
+                        {
+                            "task_id": 2,
+                            "title": "Write README",
+                            "assigned_to": "Alex",
+                            "status": "Pending"
                         }
                     ]
+                },
+                {
+                    "project_id": 2,
+                    "title": "Website",
+                    "description": "Portfolio Website",
+                    "due_date": "2026-12-31",
+                    "tasks": []
                 }
             ]
         }
